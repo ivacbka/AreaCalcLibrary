@@ -3,11 +3,13 @@ using LibraryTest;
 
 namespace LibraryTest
 {
-	class MainClass
+	/// <summary>
+	/// Main class for library test app
+	/// </summary>
+	public class MainClass
 	{
 		public static void Main(string[] args)
 		{
-			Console.ReadLine();
 			if(LibraryTest.AreaUtilsTest.Test()) 
 			{
 				Console.WriteLine ("TestPassed");

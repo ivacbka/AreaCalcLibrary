@@ -4,39 +4,14 @@ using System.Collections.Generic;
 namespace LibraryTest
 {
 	using AreaCalcLibrary;
-	
+
+	/// <summary>
+	/// Unit test for library
+	/// </summary>
 	public static class AreaUtilsTest
 	{
-		private struct TestDataSet
-		{
-			public float A;
-			public float B;
-			public float C;
-			public TestResult Result;
-			public float Area;
-		}
-		
-		private enum TestResult
-		{
-			Failed,
-			Succeded
-		}
-		
-		private static bool IsTestPassed(TestDataSet dataSet)
-		{
-			try
-			{
-				bool resultIsRight = MathUtils.AreAlmostEqual(AreaUtils.RightTriangleArea( dataSet.A, dataSet.B, dataSet.C), dataSet.Area, _relError, _absError);
-				Console.WriteLine("ResultIsRight");
-				return (resultIsRight && dataSet.Result == TestResult.Succeded);
-			}
-			catch(AreaUtils.InvalidInputException)
-			{
-				Console.WriteLine("GotException");
-				return (dataSet.Result == TestResult.Failed);
-			}
-		}
-		
+		#region public
+
 		public static bool Test()
 		{
 			bool passed = true;
@@ -60,8 +35,51 @@ namespace LibraryTest
 			return passed;
 		}
 
+		#endregion
+	
+		////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////
+
+		#region private functions
+
+		private static bool IsTestPassed(TestDataSet dataSet)
+		{
+			try
+			{
+				bool resultIsRight = MathUtils.AreAlmostEqual(AreaUtils.RightTriangleArea( dataSet.A, dataSet.B, dataSet.C), dataSet.Area, _relError, _absError);
+				return (resultIsRight && dataSet.Result == TestResult.Succeded);
+			}
+			catch(AreaUtils.InvalidInputException)
+			{
+				return (dataSet.Result == TestResult.Failed);
+			}
+		}
+
+		#endregion
+		
+		////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////
+
+		#region private data
+
+		private struct TestDataSet
+		{
+			public float A;
+			public float B;
+			public float C;
+			public TestResult Result;
+			public float Area;
+		}
+		
+		private enum TestResult
+		{
+			Failed,
+			Succeded
+		}
+
 		private static float _relError = 0.0001f;
 		private static float _absError = 0.0001f;
+
 		private static List<TestDataSet> _sets = new List<TestDataSet>()
 		{
 			new TestDataSet{ A = 0, 								B=3, C=4, Result=TestResult.Failed, 	Area=0},
@@ -75,5 +93,10 @@ namespace LibraryTest
 			new TestDataSet{ A = Single.MaxValue, 					B=4, C=5, Result=TestResult.Failed, 	Area=0},
 			new TestDataSet{ A = 30000 + 30000 * _relError * 0.99f, B=40000, C=50000, Result=TestResult.Succeded, 	Area=600000000.0f},
 		};
+
+		#endregion
+		
+		////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////
 	}
 }
